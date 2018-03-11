@@ -1,0 +1,19 @@
+{
+    "name": "faparicior/excel_pivot_table",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Fernando Aparicio",
+            "email": "faparicior@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Faparicior\\ExcelPivotTable\\": "Lib/"
+        }
+    },
+    "require": {
+        "pclzip/pclzip": "^2.8",
+        "ramsey/uuid": "^3.7"
+    }
+}
