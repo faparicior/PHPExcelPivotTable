@@ -1,10 +1,17 @@
 {
-    "name": "faparicior/excel_pivot_table",
+    "name": "faparicior/php-excel-pivot-table",
     "type": "library",
+    "description": "Php Excel pivot table filler",
+    "keywords" : [
+        "Php Excel pivot table filler"
+    ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Fernando Aparicio",
-            "email": "faparicior@gmail.com"
+            "email": "faparicior@gmail.com",
+            "homepage": "http://www.fernandoaparicio.net",
+            "role": "Developer"
         }
     ],
     "autoload": {
