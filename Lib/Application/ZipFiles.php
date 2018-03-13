@@ -32,11 +32,13 @@ class ZipFiles
      */
     public function composeExcel($folder)
     {
-        $this->archiver->create($folder, '', $folder);
+        $this->archiver->create($folder.'/', PCLZIP_OPT_REMOVE_PATH, $folder);
     }
 
     /**
      * Delete temporary folder
+     *
+     * @param $tmpDir
      */
     public function cleanTemp($tmpDir)
     {
