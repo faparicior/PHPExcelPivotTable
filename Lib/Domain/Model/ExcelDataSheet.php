@@ -32,28 +32,45 @@ class ExcelDataSheet
 
         $this->setHeaderDataSheet();
         $this->setLineDataSheet();
-
-        $this->addHeader();
     }
 
     private function setHeaderDataSheet()
     {
-        $this->headerDataSheet = $this->domSheetData->getElementsByTagName('row')->item(0);
+        $this->headerDataSheet = $this->getRow(1);
     }
 
     private function setLineDataSheet()
     {
-        $this->lineDataSheet = $this->domSheetData->getElementsByTagName('row')->item(1);
+        $this->lineDataSheet = $this->getRow(2);
+    }
+
+    /**
+     * @param $row
+     *
+     * @return \DOMElement
+     */
+    private function getRow($row)
+    {
+        $rows = $this->domSheetData->getElementsByTagName('row');
+
+        for($i=0; $i< $rows->length; $i++)
+        {
+            if ($rows->item($i)->getAttribute('r') == $row.'') {
+                return $rows->item($i);
+            }
+        }
+
+        return null;
     }
 
     public function clearData()
     {
         $parentNode = $this->domSheetData->getElementsByTagName('sheetData')->item(0);
 
-       while($parentNode->hasChildNodes())
-       {
+        while($parentNode->hasChildNodes())
+        {
            $parentNode->removeChild($parentNode->firstChild);
-       }
+        }
     }
 
     public function addHeader()
@@ -67,6 +84,8 @@ class ExcelDataSheet
      */
     public function addLines($data)
     {
+        $this->addHeader();
+
         foreach ($data as $line)
         {
             $this->addLine(array_values($line));
