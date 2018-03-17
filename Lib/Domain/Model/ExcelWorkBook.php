@@ -46,7 +46,9 @@ class ExcelWorkBook
         {
             if ($element->getAttribute('name') == $workSheetName)
             {
-                $sheetId = $element->getAttribute('sheetId');
+//                $sheetId = $element->getAttribute('sheetId');
+                $sheetId = $element->getAttribute('r:id');
+                $sheetId = substr($sheetId, 3);
                 return self::WORKSHEETS_PATH.'sheet'.$sheetId.'.xml';
             }
         }

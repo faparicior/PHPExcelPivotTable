@@ -33,8 +33,6 @@ class ExcelDataSheet
         $this->setHeaderDataSheet();
         $this->setLineDataSheet();
 
-        $this->clearData();
-
         $this->addHeader();
     }
 
@@ -48,7 +46,7 @@ class ExcelDataSheet
         $this->lineDataSheet = $this->domSheetData->getElementsByTagName('row')->item(1);
     }
 
-    private function clearData()
+    public function clearData()
     {
         $parentNode = $this->domSheetData->getElementsByTagName('sheetData')->item(0);
 
@@ -78,6 +76,26 @@ class ExcelDataSheet
     }
 
     /**
+     * @param $row
+     * @param $col
+     * @param $data
+     */
+    public function changeCell($row, $col, $data)
+    {
+        $cells = $this->domSheetData->getElementsByTagName('c');
+
+        for($i=0; $i<$cells->length; $i++)
+        {
+            if ($cells->item($i)->getAttribute('r') == $col.$row) {
+                ExcelNodeFactory::getCellNode($data, $cells->item($i), $this->domSheetData);
+                $this->saveData();
+
+                return;
+            }
+        }
+    }
+
+    /**
      * @param array $arrayLine
      */
     public function addLine($arrayLine)
@@ -102,6 +120,7 @@ class ExcelDataSheet
 
         $this->sheetData->appendChild($row);
     }
+
     /**
      * @return \DOMDocument
      */

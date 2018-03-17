@@ -35,7 +35,7 @@ class ExcelDocument
     {
         $workSheetData = $this->getWorkSheet($workSheetName);
         $excelSheetData = new ExcelDataSheet($workSheetData);
-
+        $excelSheetData->clearData();
         $excelSheetData->addLines($data);
 
         $workBook = $this->getWorkBook();
@@ -43,17 +43,18 @@ class ExcelDocument
 
     }
 
-    public function openDocument()
+    /**
+     * @param $workSheetName
+     * @param $row
+     * @param $col
+     * @param $data
+     */
+    public function changeCell($workSheetName, $row, $col, $data)
     {
-        $excel = new ZipFiles($this->excelOriginal);
-        $excel->decomposeExcel($this->tmpPath.$this->tmpId);
-    }
+        $workSheetData = $this->getWorkSheet($workSheetName);
+        $excelSheetData = new ExcelDataSheet($workSheetData);
 
-    public function saveDocument($newExcel)
-    {
-        $excelNew = new ZipFiles($newExcel);
-        $excelNew->composeExcel($this->tmpPath.$this->tmpId);
-        $excelNew->cleanTemp($this->tmpPath.$this->tmpId);
+        $excelSheetData->changeCell($row, $col, $data);
     }
 
     /**
@@ -77,5 +78,18 @@ class ExcelDocument
         $dom->load( $this->tmpPath.'/'.$this->tmpId.'/'.self::WORKBOOK);
 
         return new ExcelWorkBook($dom);
+    }
+
+    public function openDocument()
+    {
+        $excel = new ZipFiles($this->excelOriginal);
+        $excel->decomposeExcel($this->tmpPath.$this->tmpId);
+    }
+
+    public function saveDocument($newExcel)
+    {
+        $excelNew = new ZipFiles($newExcel);
+        $excelNew->composeExcel($this->tmpPath.$this->tmpId);
+        $excelNew->cleanTemp($this->tmpPath.$this->tmpId);
     }
 }
