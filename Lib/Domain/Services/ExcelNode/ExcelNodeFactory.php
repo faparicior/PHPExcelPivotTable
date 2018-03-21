@@ -17,10 +17,10 @@ final class ExcelNodeFactory
     {
         if (DateNode::checkValue($value)) {
             return DateNode::valueToExcelNode($value, $col, $dom);
-        } elseif (TextNode::checkValue($value)) {
-            return TextNode::valueToExcelNode($value, $col, $dom);
         } elseif (ValueNode::checkValue($value)) {
             return ValueNode::valueToExcelNode($value, $col, $dom);
+        } elseif (TextNode::checkValue($value)) {
+            return TextNode::valueToExcelNode($value, $col, $dom);
         }
 
         return null;

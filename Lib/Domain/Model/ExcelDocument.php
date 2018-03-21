@@ -8,6 +8,7 @@ use Ramsey\Uuid\Uuid;
 class ExcelDocument
 {
     const WORKBOOK = 'xl/workbook.xml';
+    const WORKBOOK_RELS = 'xl/_rels/workbook.xml.rels';
 
     private $excelOriginal;
     private $tmpPath;
@@ -74,10 +75,13 @@ class ExcelDocument
      */
     private function getWorkBook()
     {
-        $dom = new \DOMDocument();
-        $dom->load( $this->tmpPath.'/'.$this->tmpId.'/'.self::WORKBOOK);
+        $domWorkSheet = new \DOMDocument();
+        $domWorkSheet->load( $this->tmpPath.'/'.$this->tmpId.'/'.self::WORKBOOK);
 
-        return new ExcelWorkBook($dom);
+        $domWorkSheetRel = new \DOMDocument();
+        $domWorkSheetRel->load( $this->tmpPath.'/'.$this->tmpId.'/'.self::WORKBOOK_RELS);
+
+        return new ExcelWorkBook($domWorkSheet, $domWorkSheetRel);
     }
 
     public function openDocument()

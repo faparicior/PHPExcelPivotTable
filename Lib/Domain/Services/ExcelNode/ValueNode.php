@@ -32,7 +32,7 @@ final class ValueNode implements ExcelNode
         $node->removeAttribute('s');
         $node->nodeValue = '';
         $newNodeV=$document->createElement('v');
-        $newNodeV->nodeValue = $string;
+        $newNodeV->nodeValue = htmlspecialchars($string);
 
         return $node->appendChild($newNodeV);
     }

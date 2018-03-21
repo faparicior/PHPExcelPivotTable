@@ -4,19 +4,23 @@ namespace Faparicior\ExcelPivotTable\Domain\Model;
 
 class ExcelWorkBook
 {
-    const WORKSHEETS_PATH = 'xl/worksheets/';
+    const WORKSHEETS_PATH = 'xl/';
 
     /** @var \DOMDocument $domSheetData */
     private $domSheetData;
+    /** @var \DOMDocument $domSheetRel */
+    private $domSheetRel;
 
     /**
      * ExcelWorkBook constructor.
      *
      * @param \DOMDocument $domSheetData
+     * @param \DOMDocument $domSheetRel
      */
-    public function __construct(\DOMDocument $domSheetData)
+    public function __construct(\DOMDocument $domSheetData, \DOMDocument $domSheetRel)
     {
         $this->domSheetData = $domSheetData;
+        $this->domSheetRel = $domSheetRel;
     }
 
     /**
@@ -46,14 +50,25 @@ class ExcelWorkBook
         {
             if ($element->getAttribute('name') == $workSheetName)
             {
-//                $sheetId = $element->getAttribute('sheetId');
-                $sheetId = $element->getAttribute('r:id');
-                $sheetId = substr($sheetId, 3);
-                return self::WORKSHEETS_PATH.'sheet'.$sheetId.'.xml';
+                return self::WORKSHEETS_PATH.$this->getRelationShip($element->getAttribute('r:id'));
             }
         }
 
         return null;
+    }
+
+    /**
+     * @param $rId
+     * @return string
+     */
+    private function getRelationShip($rId)
+    {
+        /** @var \DOMElement $element */
+        foreach ($this->domSheetRel->getElementsByTagName('Relationship') as $element) {
+            if ($element->getAttribute('Id') == $rId) {
+                return $element->getAttribute('Target');
+            }
+        }
     }
 
     /**
