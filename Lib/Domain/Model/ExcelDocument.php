@@ -58,6 +58,16 @@ class ExcelDocument
     }
 
     /**
+     * @param $range
+     * @param $data
+     */
+    public function modifyRange($range, $data)
+    {
+        $workBook = $this->getWorkBook();
+        $workBook->modifyRange($range, $data->rowCount());
+    }
+
+    /**
      * @param string $workSheetName
      *
      * @return \DOMDocument|null
