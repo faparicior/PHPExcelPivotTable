@@ -33,7 +33,7 @@ final class TextNode implements ExcelNode
         $node->nodeValue = '';
         $newNodeIs=$document->createElement('is');
         $newNodeT=$document->createElement('t');
-        $newNodeT->nodeValue = $value;
+        $newNodeT->nodeValue = htmlspecialchars($value);
 
         $newNodeIs->appendChild($newNodeT);
 
