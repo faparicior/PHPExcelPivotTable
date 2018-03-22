@@ -29,7 +29,7 @@ class ExcelDocument
     /**
      * @param $workSheetName
      * @param $data
-     * @param $range
+     * @param array $range
      */
     public function changeData($workSheetName, $data, $range)
     {
@@ -39,8 +39,10 @@ class ExcelDocument
         $excelSheetData->addLines($data);
 
         $workBook = $this->getWorkBook();
-        $workBook->modifyRange($range, $excelSheetData->rowCount());
 
+        foreach ($range as $item) {
+            $workBook->modifyRange($item, $excelSheetData->rowCount());
+        }
     }
 
     /**
